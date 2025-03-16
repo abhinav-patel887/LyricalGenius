@@ -8,7 +8,7 @@ import userRoute from './routes/userroute.js';
 
 dotenv.config();
 const app = express();
-app.use(cors({origin:process.env.FRONTEND_URL}));
+app.use(cors({origin:"https://lyrical-genius-jo6c.vercel.app"}));
 app.use(express.json());
 
 app.use('/api', lyricroute);
