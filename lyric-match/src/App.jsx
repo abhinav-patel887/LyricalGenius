@@ -14,7 +14,7 @@ const App = () => {
   const fetchLyrics = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/generate-lyric");
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/generate-lyric`);
       setLyric(response.data.lyrics);
       setSongTitle(response.data.title);
       setResult(null);
@@ -30,11 +30,10 @@ const App = () => {
       const correctans = songTitle.toLowerCase();
       const userans = userGuess.toLowerCase();
       if (correctans === userans) {
-        const answer = await axios.post("http://localhost:5000/user/answers", {
+        const answer = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/answers`, {
           title: songTitle,
           lyrics: lyric,
         });
-        console.log(answer);
         success("Correct Answer");
         setLyric("");
         setUserGuess("");
