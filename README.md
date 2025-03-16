@@ -6,6 +6,12 @@ Lyrical Genius is a fun and interactive web application that allows users to gen
 
 ![image](https://github.com/user-attachments/assets/fce83199-a0d1-4fad-885e-238ca137100d)
 
+![image](https://github.com/user-attachments/assets/137681df-8dd2-4702-9c2c-ec74d285f5fd)
+
+
+![image](https://github.com/user-attachments/assets/f971c24d-e834-4269-b19b-f29a9aeea8b5)
+
+
 ---
 
 ## 🚀 Features
