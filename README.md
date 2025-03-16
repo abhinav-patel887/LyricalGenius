@@ -2,6 +2,10 @@
 
 Lyrical Genius is a fun and interactive web application that allows users to generate song lyrics using **Google Gemini LLM** and test their music knowledge by guessing the song title. The application features a **React.js** frontend and a **Node.js/Express.js** backend, with **MongoDB** for data storage.
 
+![Screenshot 2025-03-16 232723](https://github.com/user-attachments/assets/2697bcd0-1c18-4507-8ace-67dce57234e6)
+
+![image](https://github.com/user-attachments/assets/fce83199-a0d1-4fad-885e-238ca137100d)
+
 ---
 
 ## 🚀 Features
