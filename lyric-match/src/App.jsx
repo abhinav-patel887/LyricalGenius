@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -10,6 +10,21 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+  const warning = (message) =>
+    toast(message, {
+      icon: "⚠️",
+      duration: 5000,
+      style: {
+        background: "#2E2E58",
+        color: "#FFD700",
+        fontSize: "16px",
+        fontWeight: "600",
+        borderRadius: "10px",
+        padding: "12px",
+        border: "1px solid #FFD700",
+      },
+    });
+  const count = useRef(0);
 
   const fetchLyrics = async () => {
     setLoading(true);
@@ -17,19 +32,20 @@ const App = () => {
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/generate-lyric`);
       setLyric(response.data.lyrics);
       setSongTitle(response.data.title);
+      count.current = 0;
       setResult(null);
     } catch (error) {
       console.error("Error fetching lyrics:", error);
     }
     setLoading(false);
   };
-
   const checkAnswer = async () => {
     if (!userGuess.trim()) return;
     try {
       const correctans = songTitle.toLowerCase();
       const userans = userGuess.toLowerCase();
       if (correctans === userans) {
+        count.current = 0;
         const answer = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/answers`, {
           title: songTitle,
           lyrics: lyric,
@@ -38,8 +54,14 @@ const App = () => {
         setLyric("");
         setUserGuess("");
       } else {
-        error("Incorrect Answer");
-        setUserGuess("");
+        count.current += 1;
+        if(count.current<3){error("Incorrect Answer: "+(3-count.current)+" attempts left");}
+        else{
+          warning("The Song is: "+songTitle.toUpperCase());
+          count.current = 0;
+          setLyric("");
+          setUserGuess("");
+        } 
       }
     } catch (error) {
       console.error("Error checking answer:", error);
@@ -69,7 +91,7 @@ const App = () => {
 
         <div className="bg-[#2E2E58] p-6 rounded-lg shadow-xl w-full text-center border border-[#4A4A88]">
           {lyric ? (
-            <p className="text-xl italic font-light text-[#E1D9FF]">"{lyric}"</p>
+            lyric.split("\n").map((line, index) => <p className="text-0.5xl italic font-light text-[#E1D9FF]" key={index}>{line}</p>)
           ) : (
             <p className="text-lg text-gray-400">Click 'Generate Lyric' to start!</p>
           )}
